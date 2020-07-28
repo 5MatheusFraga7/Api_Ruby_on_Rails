@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,3 +23,6 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+=======
+# Api_Ruby_on_Rails
+>>>>>>> e98ba6c49160ee5de62d1e5982705b03cde8b067
