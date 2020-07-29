@@ -5,5 +5,7 @@ Rails.application.routes.draw do
   #Especifica que não precisa de caminho a ser digitado na url para entrar nos controllers >> api.site/rota_criada
   namespace :api, defaults: {format: :json}, constraints: {subdomain: 'api'}, path: '/' do 
 
+  	
+
   end 
 end
