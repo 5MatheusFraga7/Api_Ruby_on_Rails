@@ -72,8 +72,6 @@ RSpec.describe 'Users API', type: :request do
 			end
 
 			it 'returns the JSON data from the user updated' do 
-
-
 				expect(json_body[:email]).to eq(user_params[:email])
 			end
 		end
