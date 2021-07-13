@@ -6,7 +6,7 @@ RSpec.describe Task, type: :model do
   	it { expect(task).not_to be_done }
   end
 
- it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:user) }
 
 
   it { is_expected.to validate_presence_of :title }
