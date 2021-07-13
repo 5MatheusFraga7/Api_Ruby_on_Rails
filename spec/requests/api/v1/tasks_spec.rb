@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Task API' do 
 
-	before { host! 'api.taskmanager.dev' }
+	before { host! 'api.taskmanager.test' }
 
 	let!(:user) { create(:user) }
 	let(:headers) do 
@@ -135,6 +135,24 @@ RSpec.describe 'Task API' do
 				expect( Task.find_by(title: task_params[:title]) ).to be_nil
 			end
 		end 
+
+	end
+
+	describe 'DELETE /task/:id' do 
+
+		let!(:task) { create(:task, user_id: user.id) }
+
+		before do 
+			put "/tasks/#{task.id}", params: {}, headers: headers
+		end
+
+		# it 'status code is 204' do 
+		# 	expect(response).to have_http_status(204)
+		# end
+
+		# it 'removes the task from the database' do 
+		# 	expect(Task.find(task.id)).to raise_error(ActiveRecord::RecordNotFound)
+		# end
 
 	end
 end
