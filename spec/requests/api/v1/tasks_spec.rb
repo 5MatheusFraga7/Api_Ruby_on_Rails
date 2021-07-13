@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Task API' do 
 
-	before { host! 'api.taskmanager.dev' }
+	before { host! 'api.taskmanager.test' }
 
 	let!(:user) { create(:user) }
 	let(:headers) do 
@@ -91,4 +91,68 @@ RSpec.describe 'Task API' do
 						
 		end 
 	end	
+
+	describe 'PUT /task/:id' do 
+
+		let!(:task) { create(:task, user_id: user.id) }
+
+		before do 
+			put "/tasks/#{task.id}", params: { task: task_params }.to_json, headers: headers
+		end
+
+		context 'when the params is valid' do 
+
+			let(:task_params) { { title: 'New Task Title' } }
+
+			it 'status code is 200' do 
+				expect(response).to have_http_status(200)
+			end
+
+			it 'returns the json for updated task' do 
+
+				expect(json_body[:title]).to eq(task_params[:title])
+			end
+
+			it 'updates the task in the database' do 
+				expect( Task.find_by(title: task_params[:title]) ).not_to be_nil
+			end
+		end 
+
+
+		context 'when the params are invalid' do 
+
+			let(:task_params) { { title: '' } }
+
+			it 'status code is 422' do 
+				expect(response).to have_http_status(422)
+			end
+
+			it 'returns the json error for the title' do 
+				expect(json_body[:errors]).to have_key(:title)
+			end
+
+			it 'does not updates the task in the database' do 
+				expect( Task.find_by(title: task_params[:title]) ).to be_nil
+			end
+		end 
+
+	end
+
+	describe 'DELETE /task/:id' do 
+
+		let!(:task) { create(:task, user_id: user.id) }
+
+		before do 
+			put "/tasks/#{task.id}", params: {}, headers: headers
+		end
+
+		# it 'status code is 204' do 
+		# 	expect(response).to have_http_status(204)
+		# end
+
+		# it 'removes the task from the database' do 
+		# 	expect(Task.find(task.id)).to raise_error(ActiveRecord::RecordNotFound)
+		# end
+
+	end
 end
